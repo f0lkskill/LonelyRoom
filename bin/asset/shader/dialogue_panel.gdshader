@@ -5,7 +5,7 @@ shader_type canvas_item;
 // 面板中心的最大不透明度。
 uniform float strength : hint_range(0.0, 1.0, 0.01) = 0.92;
 // 圆角半径，单位像素。
-uniform float corner_radius : hint_range(0.0, 120.0, 1.0) = 32.0;
+uniform float corner_radius : hint_range(0.0, 120.0, 1.0) = 72.0;
 // 边缘淡出的宽度，单位像素。
 uniform float edge_softness : hint_range(0.0, 80.0, 1.0) = 28.0;
 // 从上到下的轻微明暗渐变。

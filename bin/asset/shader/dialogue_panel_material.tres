@@ -5,7 +5,7 @@
 [resource]
 shader = ExtResource("1_shader")
 shader_parameter/strength = 0.92
-shader_parameter/corner_radius = 32.0
+shader_parameter/corner_radius = 72.0
 shader_parameter/edge_softness = 28.0
 shader_parameter/vertical_fade = 0.08
 shader_parameter/rect_size = Vector2(880, 200)

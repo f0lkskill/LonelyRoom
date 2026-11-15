@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_character")
 display_name = "我"
-name_font_size = 32
+name_font_size = 42
 name_color = Color(0.63, 0.86, 1, 1)
 name_outline_color = Color(0, 0, 0, 1)
-name_outline_size = 8
+name_outline_size = 10

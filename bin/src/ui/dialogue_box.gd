@@ -129,10 +129,10 @@ func _apply_character_style(character) -> void:
 			speaker_label.add_theme_constant_override("outline_size", int(outline_size))
 	else:
 		speaker_label.remove_theme_font_override("font")
-		speaker_label.add_theme_font_size_override("font_size", 32)
+		speaker_label.add_theme_font_size_override("font_size", 42)
 		speaker_label.add_theme_color_override("font_color", Color(0.63, 0.86, 1.0, 1.0))
 		speaker_label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 1.0))
-		speaker_label.add_theme_constant_override("outline_size", 8)
+		speaker_label.add_theme_constant_override("outline_size", 10)
 
 
 ## 淡入或淡出面板，并在淡出结束后隐藏节点。
