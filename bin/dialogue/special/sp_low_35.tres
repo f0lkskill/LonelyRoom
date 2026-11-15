@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
+[ext_resource type="Resource" path="res://bin/character/protagonist.tres" id="2_character"]
+
+[resource]
+script = ExtResource("1_dialogue")
+speaker = ExtResource("2_character")
+speaker_name = "我"
+lines = Array[String](["脑子里的声音开始变得断断续续。", "我试着深呼吸，但空气像是没有进来。"])

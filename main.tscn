@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://cygj03vyafrm2" path="res://bin/asset/shader/noise_bars.gdshader" id="2_noise"]
 [ext_resource type="Shader" uid="uid://ciepch8cy2gpk" path="res://bin/asset/shader/vignette.gdshader" id="3_vignette"]
 [ext_resource type="PackedScene" path="res://bin/scence/ui/dialogue_box.tscn" id="4_dialogue"]
+[ext_resource type="PackedScene" path="res://bin/scence/ui/sp_ring.tscn" id="5_sp_ring"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_noise"]
 shader = ExtResource("2_noise")
@@ -47,5 +48,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="SpRing" parent="CanvasLayer" instance=ExtResource("5_sp_ring")]
 
 [node name="DialogueBox" parent="CanvasLayer" unique_id=1317363862 instance=ExtResource("4_dialogue")]

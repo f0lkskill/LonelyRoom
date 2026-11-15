@@ -3,6 +3,13 @@
 ## 并把点击事件分发给可交互物体和对话框。
 extends Node2D
 
+## SP 跌到不同比例时触发的特殊独白。
+const SP_SPECIALS := [
+	{"id": "sp35", "ratio": 0.35, "data": preload("res://bin/dialogue/special/sp_low_35.tres")},
+	{"id": "sp20", "ratio": 0.20, "data": preload("res://bin/dialogue/special/sp_low_20.tres")},
+	{"id": "sp10", "ratio": 0.10, "data": preload("res://bin/dialogue/special/sp_low_10.tres")},
+]
+
 ## 启动时实例化的房间场景路径。
 @export_file("*.tscn") var room_path: String = "res://bin/scence/rooms/hall_room/hall_room.tscn"
 ## 解离效果的总强度，范围 0.0 到 1.0。
@@ -37,6 +44,10 @@ var _object_materials: Array[ShaderMaterial] = []
 var _interactables: Array = []
 ## 当前鼠标悬停的可交互物体，没有则为 null。
 var _hovered = null
+## 已经触发过的 SP 阈值，避免重复触发。
+var _seen_sp_thresholds: Dictionary = {}
+## 等待播放的低 SP 特殊对话。
+var _special_queue: Array[Resource] = []
 
 
 ## 实例化房间，并准备材质、交互、镜头和视觉效果。
@@ -54,14 +65,36 @@ func _ready() -> void:
 	_room_loaded = true
 	camera.make_current()
 	_update_camera(0.0, true)
-	_apply_dissociation_strength()
+	GameState.sp_changed.connect(_on_sp_changed)
+	_on_sp_changed(GameState.sp, GameState.max_sp)
 
 
-## 先刷新悬停状态，再移动镜头。
+## 先刷新悬停状态，再移动镜头，并处理排队中的特殊对话。
 func _process(delta: float) -> void:
 	if _room_loaded:
 		_update_hover()
 		_update_camera(delta, false)
+		_try_start_special_dialogue()
+
+
+## SP 越低，画面解离越强，并在阈值处排队特殊独白。
+func _on_sp_changed(value: float, max_value: float) -> void:
+	var ratio := clampf(value / max_value, 0.0, 1.0) if max_value > 0.0 else 0.0
+	dissociation_strength = lerpf(0.15, 1.0, 1.0 - ratio)
+
+	for item in SP_SPECIALS:
+		if ratio <= float(item["ratio"]) and not _seen_sp_thresholds.has(item["id"]):
+			_seen_sp_thresholds[item["id"]] = true
+			_special_queue.append(item["data"])
+
+
+## 当前没有对话框时，播放排队中的特殊对话。
+func _try_start_special_dialogue() -> void:
+	if _special_queue.is_empty() or dialogue_box.is_open():
+		return
+
+	var data = _special_queue.pop_front()
+	dialogue_box.start(data)
 
 
 ## 为每个 Sprite 复制独立材质，并分配稳定的随机破碎种子。

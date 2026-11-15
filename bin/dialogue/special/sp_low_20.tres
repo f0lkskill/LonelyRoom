@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
+
+[resource]
+script = ExtResource("1_dialogue")
+speaker_name = ""
+narration = true
+lines = Array[String](["房间的边界开始变得模糊。", "我不确定自己还坐在原来的位置。"])
