@@ -6,19 +6,19 @@ extends Control
 const CHAR_EFFECT := preload("res://bin/asset/effect/char_fade_rotate.tres")
 
 ## 文本区域的最小宽度。
-@export var min_content_width: float = 80.0
+@export var min_content_width: float = 96.0
 ## 文本区域的最大宽度，超过后自动换行。
 @export var max_content_width: float = 720.0
 ## 文本标签的最大高度。
 @export var max_text_height: float = 480.0
 ## 阴影左右内边距。
-@export var horizontal_padding: float = 96.0
+@export var horizontal_padding: float = -8.0
 ## 阴影上下内边距。
-@export var vertical_padding: float = 80.0
+@export var vertical_padding: float = 0.0
 ## 阴影底部与屏幕底部的距离。
 @export var bottom_margin: float = 36.0
 ## 阴影的最小高度。
-@export var min_panel_height: float = 140.0
+@export var min_panel_height: float = 80.0
 
 @onready var panel: ColorRect = $Panel
 @onready var content: Control = $Panel/Content
@@ -37,6 +37,8 @@ var _line_length := 0
 var _current_line_text := ""
 var _delay_per_character := 0.03
 var _fade_duration := 0.22
+var _line_text_height := 0.0
+var _line_panel_height := 80.0
 
 
 func _ready() -> void:
@@ -92,7 +94,7 @@ func _update_typewriter() -> void:
 	text_label.visible_characters = count
 
 
-## 让阴影尺寸实时跟随当前已经显示出来的文本。
+## 让阴影宽度实时跟随当前已经显示出来的文本，高度保持整行固定。
 func _resize_shadow_to_text() -> void:
 	var count := text_label.visible_characters
 	if count < 0:
@@ -105,9 +107,9 @@ func _resize_shadow_to_text() -> void:
 	var content_width := clampf(text_width + 4.0, min_content_width, max_content_width)
 
 	text_label.size = Vector2(content_width, max_text_height)
-	var visible_height := float(text_label.get_content_height())
-	var panel_height := maxf(visible_height + vertical_padding * 2.0, min_panel_height)
-	_apply_panel_rect(content_width + horizontal_padding * 2.0, panel_height)
+	var content_height := _line_panel_height - vertical_padding * 2.0
+	text_label.position = Vector2(0.0, maxf((content_height - _line_text_height) * 0.5, 0.0))
+	_apply_panel_rect(content_width + horizontal_padding * 2.0, _line_panel_height)
 
 
 ## 将阴影实际尺寸同步给圆角阴影 Shader。
@@ -179,6 +181,7 @@ func _show_line() -> void:
 	var line_text: String = str(_data.lines[_line_index])
 	_current_line_text = line_text
 	_line_length = line_text.length()
+	_measure_line_height(line_text)
 
 	speaker_label.text = speaker
 	speaker_label.visible = not narration
@@ -201,6 +204,27 @@ func _show_line() -> void:
 	_line_started_msec = Time.get_ticks_msec()
 	_line_reveal_ms = maxf(float(_line_length) * _delay_per_character + _fade_duration, 0.1) * 1000.0
 	text_label.visible_characters = 1
+
+
+## 根据完整文本计算固定行高，打字过程中高度不再变化。
+func _measure_line_height(line_text: String) -> void:
+	var text_font := text_label.get_theme_font("normal_font")
+	var text_size := text_label.get_theme_font_size("normal_font_size")
+	var line_height := text_font.get_height(text_size)
+	var lines := 1
+	var current_width := 0.0
+
+	for i in line_text.length():
+		var character := line_text.substr(i, 1)
+		var character_width := text_font.get_string_size(character, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size).x
+		if current_width > 0.0 and current_width + character_width > max_content_width:
+			lines += 1
+			current_width = character_width
+		else:
+			current_width += character_width
+
+	_line_text_height = line_height * float(lines)
+	_line_panel_height = maxf(_line_text_height + vertical_padding * 2.0, min_panel_height)
 
 
 ## 应用阴影尺寸和底部居中位置。
