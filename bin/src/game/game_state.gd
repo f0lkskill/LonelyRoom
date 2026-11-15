@@ -10,24 +10,30 @@ signal sp_changed(value: float, max_value: float)
 @export var starting_sp: float = 100.0
 ## 每秒自然流失的 SP。
 @export var decay_per_second: float = 0.5
+## SP 变化时的平滑速度，越大越快。
+@export var change_smoothing: float = 8.0
 
 var sp: float = 100.0
+var target_sp: float = 100.0
 var flags: Dictionary = {}
 
 
 func _ready() -> void:
 	sp = clampf(starting_sp, 0.0, max_sp)
+	target_sp = sp
 	sp_changed.emit(sp, max_sp)
 
 
 func _process(delta: float) -> void:
-	if sp > 0.0:
-		_set_sp(sp - decay_per_second * delta)
+	target_sp = clampf(target_sp - decay_per_second * delta, 0.0, max_sp)
+	sp = lerpf(sp, target_sp, 1.0 - exp(-change_smoothing * delta))
+	sp_changed.emit(sp, max_sp)
 
 
 ## 增加或减少 SP，正数为恢复，负数为消耗。
+## 实际显示值会在 _process 中平滑过渡。
 func change_sp(amount: float) -> void:
-	_set_sp(sp + amount)
+	target_sp = clampf(target_sp + amount, 0.0, max_sp)
 
 
 ## 返回当前 SP 比例，范围 0.0 到 1.0。
@@ -44,8 +50,3 @@ func has_flag(flag_name: String) -> bool:
 func set_flag(flag_name: String) -> void:
 	if not flag_name.is_empty():
 		flags[flag_name] = true
-
-
-func _set_sp(value: float) -> void:
-	sp = clampf(value, 0.0, max_sp)
-	sp_changed.emit(sp, max_sp)
