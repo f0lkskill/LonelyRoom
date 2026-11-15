@@ -221,7 +221,6 @@ func _show_choices() -> void:
 		return
 
 	_choices_visible = true
-	speaker_label.visible = false
 	choices_container.visible = true
 	choices_container.modulate.a = 0.0
 	_choices_tween = create_tween()
