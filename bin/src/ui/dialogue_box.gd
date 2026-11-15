@@ -94,6 +94,8 @@ func _fade_to(target: float, hide_after := false) -> void:
 		_fade_tween.kill()
 
 	_fade_tween = create_tween()
-	_fade_tween.tween_property(self, "modulate:a", target, 0.18)
+	_fade_tween.set_trans(Tween.TRANS_SINE)
+	_fade_tween.set_ease(Tween.EASE_IN_OUT)
+	_fade_tween.tween_property(self, "modulate:a", target, 0.3)
 	if hide_after:
 		_fade_tween.tween_callback(func() -> void: visible = false)

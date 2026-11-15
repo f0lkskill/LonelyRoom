@@ -6,8 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_panel"]
 shader = ExtResource("2_shader")
 shader_parameter/strength = 0.92
-shader_parameter/vertical_falloff = 2.0
-shader_parameter/softness = 0.55
+shader_parameter/softness = 0.35
 
 [node name="DialogueBox" type="Control"]
 visible = false
