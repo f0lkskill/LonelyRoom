@@ -12,9 +12,9 @@ const CHAR_EFFECT := preload("res://bin/asset/effect/char_fade_rotate.tres")
 ## 文本标签的最大高度。
 @export var max_text_height: float = 480.0
 ## 阴影左右内边距。
-@export var horizontal_padding: float = -8.0
+@export var horizontal_padding: float = 40.0
 ## 阴影上下内边距。
-@export var vertical_padding: float = 0.0
+@export var vertical_padding: float = 16.0
 ## 阴影底部与屏幕底部的距离。
 @export var bottom_margin: float = 36.0
 ## 阴影的最小高度。
