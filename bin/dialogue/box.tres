@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="DialogueData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://brlhfeaw3jjwo"]
 
-[ext_resource type="Script" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
+[ext_resource type="Script" uid="uid://bh0ra7s7co6qj" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
 
 [resource]
 script = ExtResource("1_dialogue")
 speaker_name = "我"
-narration = false
 lines = Array[String](["柜门关得严严实实。", "里面大概也只是一些不想再看见的东西。"])

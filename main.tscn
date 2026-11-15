@@ -22,7 +22,7 @@ shader_parameter/darkness_color = Color(0.005, 0.006, 0.012, 1)
 
 [node name="Main" type="Node2D" unique_id=1883999042]
 script = ExtResource("1_main")
-dissociation_strength = 1.0
+dissociation_strength = 0.25
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1580339479]
 zoom = Vector2(1.2, 1.2)
@@ -48,4 +48,4 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DialogueBox" parent="CanvasLayer" instance=ExtResource("4_dialogue")]
+[node name="DialogueBox" parent="CanvasLayer" unique_id=1317363862 instance=ExtResource("4_dialogue")]
