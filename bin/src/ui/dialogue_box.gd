@@ -6,7 +6,7 @@ extends Control
 const CHAR_EFFECT := preload("res://bin/asset/effect/char_fade_rotate.tres")
 
 ## 文本区域的最小宽度。
-@export var min_content_width: float = 280.0
+@export var min_content_width: float = 80.0
 ## 文本区域的最大宽度，超过后自动换行。
 @export var max_content_width: float = 720.0
 ## 文本标签的最大高度。
@@ -34,6 +34,7 @@ var _effect
 var _line_started_msec := 0
 var _line_reveal_ms := 0.0
 var _line_length := 0
+var _current_line_text := ""
 var _delay_per_character := 0.03
 var _fade_duration := 0.22
 
@@ -71,10 +72,10 @@ func _create_text_label() -> void:
 	text_label.size = Vector2(max_content_width, max_text_height)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if visible:
 		_update_typewriter()
-		_resize_shadow_to_text(delta)
+		_resize_shadow_to_text()
 		_sync_panel_material()
 
 
@@ -91,18 +92,22 @@ func _update_typewriter() -> void:
 	text_label.visible_characters = count
 
 
-## 让阴影尺寸跟随当前可见文本，而不是最终完整文本。
-func _resize_shadow_to_text(delta: float) -> void:
-	var visible_width := float(text_label.get_content_width())
-	var visible_height := float(text_label.get_content_height())
-	var content_width := clampf(visible_width, min_content_width, max_content_width)
-	var target_width := content_width + horizontal_padding * 2.0
-	var target_height := maxf(visible_height + vertical_padding * 2.0, min_panel_height)
+## 让阴影尺寸实时跟随当前已经显示出来的文本。
+func _resize_shadow_to_text() -> void:
+	var count := text_label.visible_characters
+	if count < 0:
+		count = _line_length
 
-	var weight := 1.0 - exp(-40.0 * delta)
-	var smooth_width := lerpf(panel.size.x, target_width, weight)
-	var smooth_height := lerpf(panel.size.y, target_height, weight)
-	_apply_panel_rect(smooth_width, smooth_height)
+	var visible_text := _current_line_text.substr(0, count)
+	var text_font := text_label.get_theme_font("normal_font")
+	var text_size := text_label.get_theme_font_size("normal_font_size")
+	var text_width := text_font.get_string_size(visible_text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size).x
+	var content_width := clampf(text_width + 4.0, min_content_width, max_content_width)
+
+	text_label.size = Vector2(content_width, max_text_height)
+	var visible_height := float(text_label.get_content_height())
+	var panel_height := maxf(visible_height + vertical_padding * 2.0, min_panel_height)
+	_apply_panel_rect(content_width + horizontal_padding * 2.0, panel_height)
 
 
 ## 将阴影实际尺寸同步给圆角阴影 Shader。
@@ -172,6 +177,7 @@ func _show_line() -> void:
 
 	var narration: bool = bool(_data.narration) or speaker.is_empty()
 	var line_text: String = str(_data.lines[_line_index])
+	_current_line_text = line_text
 	_line_length = line_text.length()
 
 	speaker_label.text = speaker
