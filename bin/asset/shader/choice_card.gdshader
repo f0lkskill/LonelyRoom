@@ -8,8 +8,6 @@ uniform float strength : hint_range(0.0, 1.0, 0.01) = 0.85;
 uniform float edge_softness : hint_range(0.0, 0.5, 0.01) = 0.16;
 // 上下两半的横向撕裂幅度。
 uniform float tear_amount : hint_range(0.0, 0.1, 0.001) = 0.05;
-// 中缝透明宽度。
-uniform float gap_size : hint_range(0.0, 0.08, 0.001) = 0.04;
 // 撕裂动画速度。
 uniform float speed : hint_range(0.0, 2.0, 0.01) = 0.4;
 
@@ -25,9 +23,8 @@ void fragment() {
 
 	float left = smoothstep(0.0, edge_softness, uv.x);
 	float right = smoothstep(0.0, edge_softness, 1.0 - uv.x);
-	float seam = smoothstep(0.0, gap_size, abs(uv.y - 0.5));
 	float grain = (hash(floor(FRAGCOORD.xy * 0.5)) - 0.5) * 0.05;
 
-	float alpha = strength * left * right * seam + grain * seam * 0.25;
+	float alpha = strength * left * right + grain * 0.25;
 	COLOR = vec4(0.0, 0.0, 0.0, clamp(alpha, 0.0, 1.0));
 }

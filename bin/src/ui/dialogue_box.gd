@@ -42,6 +42,7 @@ var _fade_duration := 0.22
 var _line_text_height := 0.0
 var _line_panel_height := 80.0
 var _choices_visible := false
+var _choices_tween: Tween
 
 
 func _ready() -> void:
@@ -133,7 +134,6 @@ func start(data) -> void:
 	if data == null or data.lines.is_empty():
 		return
 
-	_hide_choices()
 	_data = data
 	_line_index = 0
 	_is_open = true
@@ -200,6 +200,8 @@ func _is_choice_available(choice) -> bool:
 
 ## 显示当前对白对应的选项卡。
 func _show_choices() -> void:
+	if _choices_tween != null:
+		_choices_tween.kill()
 	_clear_choice_buttons()
 	var choices = _data.get("choices")
 	var any_available := false
@@ -219,15 +221,33 @@ func _show_choices() -> void:
 		return
 
 	_choices_visible = true
+	speaker_label.visible = false
 	choices_container.visible = true
+	choices_container.modulate.a = 0.0
+	_choices_tween = create_tween()
+	_choices_tween.set_trans(Tween.TRANS_SINE)
+	_choices_tween.tween_property(choices_container, "modulate:a", 1.0, 0.25)
 
 
 ## 隐藏并清理选项卡。
 func _hide_choices() -> void:
 	_choices_visible = false
-	if choices_container != null:
-		choices_container.visible = false
+	if choices_container == null:
+		return
+
+	if _choices_tween != null:
+		_choices_tween.kill()
+
+	if not choices_container.visible:
 		_clear_choice_buttons()
+		return
+
+	_choices_tween = create_tween()
+	_choices_tween.set_trans(Tween.TRANS_SINE)
+	_choices_tween.tween_property(choices_container, "modulate:a", 0.0, 0.18)
+	_choices_tween.tween_callback(func() -> void:
+		choices_container.visible = false
+		_clear_choice_buttons())
 
 
 func _clear_choice_buttons() -> void:
@@ -238,6 +258,8 @@ func _clear_choice_buttons() -> void:
 
 ## 处理选项：写入标记、改变 SP，并继续后续对白。
 func _on_choice_selected(choice) -> void:
+	if not _choices_visible:
+		return
 	_hide_choices()
 
 	var flag := str(choice.get("flag"))

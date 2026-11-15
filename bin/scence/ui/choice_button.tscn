@@ -4,11 +4,11 @@
 [ext_resource type="Material" path="res://bin/asset/shader/choice_card_material.tres" id="2_material"]
 
 [node name="ChoiceButton" type="Button"]
-custom_minimum_size = Vector2(620, 64)
+custom_minimum_size = Vector2(560, 56)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 620.0
-offset_bottom = 64.0
+offset_right = 560.0
+offset_bottom = 56.0
 focus_mode = 0
 mouse_default_cursor_shape = 2
 flat = true
@@ -35,6 +35,6 @@ mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.97, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
