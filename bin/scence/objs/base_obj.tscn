@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bxuokn0kmwf8g"]
+
+[ext_resource type="Texture2D" uid="uid://b5tfgmjufu3vh" path="res://icon.svg" id="1_edxbf"]
+[ext_resource type="Script" uid="uid://dx1dvinivntkf" path="res://bin/src/base/base_obj.gd" id="2_gfc20"]
+[ext_resource type="Material" path="res://bin/asset/shader/dissociation_material.tres" id="3_material"]
+
+[node name="BaseObj" type="Sprite2D" unique_id=535404786]
+texture = ExtResource("1_edxbf")
+script = ExtResource("2_gfc20")
+material = ExtResource("3_material")

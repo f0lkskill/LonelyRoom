@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://crm2ipr850i6" path="res://bin/asset/image/garbage_1.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://dx1dvinivntkf" path="res://bin/src/base/base_obj.gd" id="2_script"]
+[ext_resource type="Material" path="res://bin/asset/shader/dissociation_material.tres" id="3_material"]
+[ext_resource type="Resource" path="res://bin/dialogue/garbage_1.tres" id="4_dialogue"]
+
+[node name="Garbage1" type="Sprite2D"]
+texture = ExtResource("1_tex")
+script = ExtResource("2_script")
+material = ExtResource("3_material")
+dialogue_data = ExtResource("4_dialogue")
+can_float = true

@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://btb03r6hipgso"]
+
+[ext_resource type="Shader" uid="uid://b7b37eif7ue3y" path="res://bin/asset/shader/dissociation.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/strength = 0.65
+shader_parameter/aberration = 4.0
+shader_parameter/blur = 2.0
+shader_parameter/tearing = 0.35
+shader_parameter/speed = 1.0
+shader_parameter/object_seed = 0.37
+shader_parameter/hover = 0.0
+shader_parameter/outline_color = Color(0.63, 0.9, 1, 1)

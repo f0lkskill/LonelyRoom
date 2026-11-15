@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://cf2juq068lxc1"]
+
+[ext_resource type="Script" uid="uid://dh1eqvaishe0x" path="res://bin/src/base/base_room.gd" id="1_3d2vd"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/floor.tscn" id="2_0dsd2"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/wall_front.tscn" id="2_f12tp"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/wall_back.tscn" id="3_su8et"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/garbage_2.tscn" id="4_htpnj"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/picture.tscn" id="5_2ef57"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/garbage_1.tscn" id="5_ymi6r"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/sofa.tscn" id="8_f42p1"]
+[ext_resource type="PackedScene" uid="uid://mjok0pi5gr33" path="res://bin/scence/objs/garbage.tscn" id="9_cmw2s"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/desk.tscn" id="9_wygmy"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/medice_bottle.tscn" id="10_wygmy"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/box.tscn" id="11_cmw2s"]
+[ext_resource type="PackedScene" path="res://bin/scence/objs/window.tscn" id="12_evvts"]
+
+[node name="BaseRoom" type="Node2D" unique_id=1172662407]
+script = ExtResource("1_3d2vd")
+
+[node name="objs" type="Node2D" parent="." unique_id=675399179]
+
+[node name="Floor" parent="objs" unique_id=1320788483 instance=ExtResource("2_0dsd2")]
+position = Vector2(10.5, 5)
+
+[node name="WallBack" parent="objs" unique_id=1904476449 instance=ExtResource("3_su8et")]
+position = Vector2(60.5, -204)
+
+[node name="Wall" parent="objs" unique_id=535404786 instance=ExtResource("2_f12tp")]
+position = Vector2(-391.5, -93)
+
+[node name="Picture" parent="objs/Wall" unique_id=588946591 instance=ExtResource("5_2ef57")]
+position = Vector2(-2.499998, -129.625)
+scale = Vector2(0.7635135, 0.8107735)
+
+[node name="Picture" parent="objs/Wall/Picture" unique_id=984820167 instance=ExtResource("5_2ef57")]
+position = Vector2(574.3186, 77.241066)
+scale = Vector2(-0.9146471, -0.6284646)
+
+[node name="Garbage2" parent="objs" unique_id=523567087 instance=ExtResource("4_htpnj")]
+position = Vector2(-267.5, 66)
+
+[node name="Garbage1" parent="objs" unique_id=402556272 instance=ExtResource("5_ymi6r")]
+position = Vector2(-338.5, 155)
+
+[node name="Garbage3" parent="objs" unique_id=1759250547 instance=ExtResource("5_ymi6r")]
+position = Vector2(329.5, 123)
+
+[node name="Sofa" parent="objs" unique_id=912432169 instance=ExtResource("8_f42p1")]
+position = Vector2(38, 110.75)
+scale = Vector2(0.9720149, 0.9741641)
+
+[node name="BaseObj" parent="objs" unique_id=262296600 instance=ExtResource("9_cmw2s")]
+position = Vector2(330.5, 192)
+
+[node name="Desk" parent="objs" unique_id=1063551701 instance=ExtResource("9_wygmy")]
+position = Vector2(440.5, 247)
+
+[node name="MediceBottle" parent="objs/Desk" unique_id=1990482562 instance=ExtResource("10_wygmy")]
+position = Vector2(44, -98)
+
+[node name="Box" parent="objs" unique_id=778367534 instance=ExtResource("11_cmw2s")]
+position = Vector2(213.5, -183.5)
+scale = Vector2(0.9717514, 0.97715735)
+
+[node name="Window" parent="objs" unique_id=665437728 instance=ExtResource("12_evvts")]
+position = Vector2(-92.50006, -273)
+scale = Vector2(0.7809524, 0.807393)
+
+[node name="Picture" parent="objs" unique_id=1157152967 instance=ExtResource("5_2ef57")]
+position = Vector2(-183.05698, 275.455)
+scale = Vector2(1.0407674, 0.7228563)
+skew = -0.6335545

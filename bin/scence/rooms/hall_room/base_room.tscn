@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cudr1ydh1oxyx"]
+
+[ext_resource type="Script" uid="uid://dh1eqvaishe0x" path="res://bin/src/base/base_room.gd" id="1_wjkou"]
+
+[node name="BaseRoom" type="Node2D" unique_id=1172662407]
+script = ExtResource("1_wjkou")
+
+[node name="objs" type="Node2D" parent="." unique_id=675399179]
