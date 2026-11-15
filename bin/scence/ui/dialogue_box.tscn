@@ -6,7 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_panel"]
 shader = ExtResource("2_shader")
 shader_parameter/strength = 0.92
-shader_parameter/softness = 0.35
+shader_parameter/softness = 0.7
 
 [node name="DialogueBox" type="Control"]
 visible = false
@@ -41,9 +41,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 56.0
-offset_top = 28.0
-offset_right = -56.0
+offset_left = 150.0
+offset_top = 24.0
+offset_right = -150.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -52,6 +52,7 @@ mouse_filter = 2
 [node name="VBox" type="VBoxContainer" parent="Panel/Content"]
 layout_mode = 2
 mouse_filter = 2
+alignment = 1
 theme_override_constants/separation = 10
 
 [node name="SpeakerLabel" type="Label" parent="Panel/Content/VBox"]
@@ -65,7 +66,6 @@ text = "我"
 
 [node name="TextLabel" type="Label" parent="Panel/Content/VBox"]
 layout_mode = 2
-size_flags_vertical = 3
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.97, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
