@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bh0ra7s7co6qj" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
 [ext_resource type="Resource" path="res://bin/character/protagonist.tres" id="2_character"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/medicine_take.tres" id="3_take"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/medicine_refuse.tres" id="4_refuse"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/medicine_discard.tres" id="5_discard"]
 
 [resource]
 script = ExtResource("1_dialogue")
 speaker = ExtResource("2_character")
 speaker_name = "我"
 lines = Array[String](["药瓶轻得几乎没有重量。", "今天……还要继续吃吗？"])
+choices = Array[Resource]([ExtResource("3_take"), ExtResource("4_refuse"), ExtResource("5_discard")])

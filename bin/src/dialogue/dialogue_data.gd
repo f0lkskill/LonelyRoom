@@ -11,3 +11,5 @@ extends Resource
 @export var narration: bool = false
 ## 点击后逐条显示的对白。
 @export var lines: Array[String] = []
+## 整段对白结束后显示的选项。
+@export var choices: Array[Resource] = []

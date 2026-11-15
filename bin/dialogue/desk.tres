@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bh0ra7s7co6qj" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
 [ext_resource type="Resource" path="res://bin/character/protagonist.tres" id="2_character"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/desk_tidy.tres" id="3_tidy"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/desk_ignore.tres" id="4_ignore"]
 
 [resource]
 script = ExtResource("1_dialogue")
 speaker = ExtResource("2_character")
 speaker_name = "我"
 lines = Array[String](["桌上的东西越堆越多，我却一件也不想整理。", "好像只要不去碰它们，今天就可以当作还没开始。"])
+choices = Array[Resource]([ExtResource("3_tidy"), ExtResource("4_ignore")])

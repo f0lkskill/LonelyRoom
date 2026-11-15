@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueChoice" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://bin/src/dialogue/dialogue_choice.gd" id="1_choice"]
+[ext_resource type="Resource" path="res://bin/dialogue/outcomes/desk_ignored.tres" id="2_next"]
+
+[resource]
+script = ExtResource("1_choice")
+text = "放着不管"
+sp_delta = -6.0
+next_dialogue = ExtResource("2_next")
+flag = "desk_resolved"
+once = true

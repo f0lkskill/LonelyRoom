@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bh0ra7s7co6qj" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
 [ext_resource type="Resource" path="res://bin/character/protagonist.tres" id="2_character"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/sofa_sit.tres" id="3_sit"]
+[ext_resource type="Resource" path="res://bin/dialogue/choices/sofa_stand.tres" id="4_stand"]
 
 [resource]
 script = ExtResource("1_dialogue")
 speaker = ExtResource("2_character")
 speaker_name = "我"
 lines = Array[String](["这张沙发……我好像已经很久没有真正坐下来过了。", "坐下去，会不会就再也站不起来了？"])
+choices = Array[Resource]([ExtResource("3_sit"), ExtResource("4_stand")])

@@ -4,6 +4,7 @@ class_name DialogueBox
 extends Control
 
 const CHAR_EFFECT := preload("res://bin/asset/effect/char_fade_rotate.tres")
+const CHOICE_SCENE := preload("res://bin/scence/ui/choice_button.tscn")
 
 ## 文本区域的最小宽度。
 @export var min_content_width: float = 96.0
@@ -23,6 +24,7 @@ const CHAR_EFFECT := preload("res://bin/asset/effect/char_fade_rotate.tres")
 @onready var panel: ColorRect = $Panel
 @onready var content: Control = $Panel/Content
 @onready var speaker_label: Label = $Panel/SpeakerLabel
+@onready var choices_container: VBoxContainer = $Choices
 
 var text_label: RichTextLabel
 
@@ -39,6 +41,7 @@ var _delay_per_character := 0.03
 var _fade_duration := 0.22
 var _line_text_height := 0.0
 var _line_panel_height := 80.0
+var _choices_visible := false
 
 
 func _ready() -> void:
@@ -52,6 +55,7 @@ func _ready() -> void:
 	_effect = CHAR_EFFECT
 	if _effect != null:
 		text_label.install_effect(_effect)
+	choices_container.visible = false
 	panel.resized.connect(_sync_panel_material)
 	_sync_panel_material()
 
@@ -129,6 +133,7 @@ func start(data) -> void:
 	if data == null or data.lines.is_empty():
 		return
 
+	_hide_choices()
 	_data = data
 	_line_index = 0
 	_is_open = true
@@ -140,7 +145,7 @@ func start(data) -> void:
 
 ## 显示下一行；最后一行结束后关闭面板。
 func advance() -> void:
-	if not _is_open:
+	if not _is_open or _choices_visible:
 		return
 
 	if Time.get_ticks_msec() - _line_started_msec < _line_reveal_ms:
@@ -152,7 +157,10 @@ func advance() -> void:
 
 	_line_index += 1
 	if _data == null or _line_index >= _data.lines.size():
-		close()
+		if _has_available_choices():
+			_show_choices()
+		else:
+			close()
 	else:
 		_show_line()
 
@@ -163,7 +171,85 @@ func close() -> void:
 		return
 
 	_is_open = false
+	_hide_choices()
 	_fade_to(0.0, true)
+
+
+## 返回是否还有未使用过的选项。
+func _has_available_choices() -> bool:
+	var choices = _data.get("choices") if _data != null else null
+	if choices == null or choices.is_empty():
+		return false
+
+	for choice in choices:
+		if _is_choice_available(choice):
+			return true
+	return false
+
+
+## 检查选项是否满足一次性标记条件。
+func _is_choice_available(choice) -> bool:
+	if choice == null:
+		return false
+	if bool(choice.get("once")):
+		var flag := str(choice.get("flag"))
+		if not flag.is_empty() and GameState.has_flag(flag):
+			return false
+	return true
+
+
+## 显示当前对白对应的选项卡。
+func _show_choices() -> void:
+	_clear_choice_buttons()
+	var choices = _data.get("choices")
+	var any_available := false
+
+	for choice in choices:
+		if not _is_choice_available(choice):
+			continue
+
+		var button = CHOICE_SCENE.instantiate()
+		choices_container.add_child(button)
+		button.setup(str(choice.get("text")))
+		button.pressed.connect(_on_choice_selected.bind(choice))
+		any_available = true
+
+	if not any_available:
+		close()
+		return
+
+	_choices_visible = true
+	choices_container.visible = true
+
+
+## 隐藏并清理选项卡。
+func _hide_choices() -> void:
+	_choices_visible = false
+	if choices_container != null:
+		choices_container.visible = false
+		_clear_choice_buttons()
+
+
+func _clear_choice_buttons() -> void:
+	for child in choices_container.get_children():
+		choices_container.remove_child(child)
+		child.queue_free()
+
+
+## 处理选项：写入标记、改变 SP，并继续后续对白。
+func _on_choice_selected(choice) -> void:
+	_hide_choices()
+
+	var flag := str(choice.get("flag"))
+	if not flag.is_empty():
+		GameState.set_flag(flag)
+
+	GameState.change_sp(float(choice.get("sp_delta")))
+	var next_dialogue = choice.get("next_dialogue")
+	if next_dialogue != null:
+		start(next_dialogue)
+	else:
+		close()
 
 
 ## 设置当前行的说话人，并启动逐字渐入效果。

@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://bin/asset/shader/choice_card.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/strength = 0.85
+shader_parameter/edge_softness = 0.16
+shader_parameter/tear_amount = 0.05
+shader_parameter/gap_size = 0.04
+shader_parameter/speed = 0.4

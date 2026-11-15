@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DialogueChoice" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://bin/src/dialogue/dialogue_choice.gd" id="1_choice"]
+[ext_resource type="Resource" path="res://bin/dialogue/outcomes/medicine_refused.tres" id="2_next"]
+
+[resource]
+script = ExtResource("1_choice")
+text = "先不吃"
+sp_delta = -10.0
+next_dialogue = ExtResource("2_next")
+flag = "medicine_resolved"
+once = true
