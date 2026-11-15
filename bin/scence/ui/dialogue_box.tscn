@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://fnpaj22ampr6"]
 
 [ext_resource type="Script" uid="uid://ch7kdythkyjup" path="res://bin/src/ui/dialogue_box.gd" id="1_script"]
-[ext_resource type="Material" path="res://bin/asset/shader/dialogue_panel_material.tres" id="2_material"]
 
 [node name="DialogueBox" type="Control" unique_id=133689282]
 modulate = Color(1, 1, 1, 0)
@@ -15,7 +14,7 @@ mouse_filter = 2
 script = ExtResource("1_script")
 
 [node name="Panel" type="ColorRect" parent="." unique_id=1523366889]
-material = ExtResource("2_material")
+color = Color(0, 0, 0, 0)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
