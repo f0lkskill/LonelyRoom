@@ -12,13 +12,13 @@ const CHAR_EFFECT := preload("res://bin/asset/effect/char_fade_rotate.tres")
 ## 文本标签的最大高度。
 @export var max_text_height: float = 480.0
 ## 阴影左右内边距。
-@export var horizontal_padding: float = 40.0
+@export var horizontal_padding: float = 64.0
 ## 阴影上下内边距。
-@export var vertical_padding: float = 16.0
+@export var vertical_padding: float = 32.0
 ## 阴影底部与屏幕底部的距离。
 @export var bottom_margin: float = 36.0
 ## 阴影的最小高度。
-@export var min_panel_height: float = 80.0
+@export var min_panel_height: float = 120.0
 
 @onready var panel: ColorRect = $Panel
 @onready var content: Control = $Panel/Content
