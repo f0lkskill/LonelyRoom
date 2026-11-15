@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://cln76lncarqhd"]
 
-[ext_resource type="Script" path="res://bin/src/dialogue/character_data.gd" id="1_character"]
+[ext_resource type="Script" uid="uid://dlhlt1vwqaiwb" path="res://bin/src/dialogue/character_data.gd" id="1_character"]
 
 [resource]
 script = ExtResource("1_character")
 display_name = "我"
-name_font_size = 42
-name_color = Color(0.63, 0.86, 1, 1)
-name_outline_color = Color(0, 0, 0, 1)
-name_outline_size = 10
+name_font_size = 43
+portrait_offset = Vector2(0, -20)
