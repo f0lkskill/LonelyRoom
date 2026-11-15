@@ -187,11 +187,7 @@ func _apply_deadzone(value: float, deadzone: float) -> float:
 
 
 ## 朝鼠标位置平移镜头，同时把视野限制在房间内。
-## 对话框显示时冻结镜头，避免文字移动。
 func _update_camera(delta: float, snap: bool) -> void:
-	if not snap and dialogue_box.is_open():
-		return
-
 	var view_size := get_viewport_rect().size
 	if view_size.x <= 0.0 or view_size.y <= 0.0:
 		return
