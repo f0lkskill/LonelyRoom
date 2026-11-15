@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://bin/src/dialogue/character_data.gd" id="1_character"]
+
+[resource]
+script = ExtResource("1_character")
+display_name = "我"
+name_font_size = 32
+name_color = Color(0.63, 0.86, 1, 1)
+name_outline_color = Color(0, 0, 0, 1)
+name_outline_size = 8

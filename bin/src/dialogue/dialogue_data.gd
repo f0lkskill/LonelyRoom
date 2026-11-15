@@ -3,7 +3,9 @@
 class_name DialogueData
 extends Resource
 
-## 显示在文本上方的说话人名字；旁白留空。
+## 说话人角色资源，优先使用其中的显示名和名字颜色。
+@export var speaker: Resource
+## 兼容用文本直接指定说话人名字；没有角色资源时使用。
 @export var speaker_name: String = ""
 ## 为 true 时隐藏说话人并居中显示文本。
 @export var narration: bool = false

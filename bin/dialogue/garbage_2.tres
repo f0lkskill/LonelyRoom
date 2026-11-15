@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="DialogueData" format=3 uid="uid://bexubp122m0j"]
 
 [ext_resource type="Script" uid="uid://bh0ra7s7co6qj" path="res://bin/src/dialogue/dialogue_data.gd" id="1_dialogue"]
+[ext_resource type="Resource" path="res://bin/character/protagonist.tres" id="2_character"]
 
 [resource]
 script = ExtResource("1_dialogue")
+speaker = ExtResource("2_character")
 speaker_name = "我"
 lines = Array[String](["袋子里的东西发出轻微的响声。", "算了，等会儿再处理。"])

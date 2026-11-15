@@ -1,8 +1,9 @@
 ## 底部对话框面板。
-## 使用柔和的径向黑色渐变作为背景，独白显示说话人，旁白隐藏说话人并居中文本。
+## 使用圆角矩形渐变作为背景，独白显示说话人，旁白隐藏说话人并居中文本。
 class_name DialogueBox
 extends Control
 
+@onready var panel: ColorRect = $Panel
 @onready var speaker_label: Label = $Panel/Content/VBox/SpeakerLabel
 @onready var text_label: Label = $Panel/Content/VBox/TextLabel
 
@@ -16,6 +17,15 @@ var _reveal_tween: Tween
 func _ready() -> void:
 	visible = false
 	modulate.a = 0.0
+	panel.resized.connect(_sync_panel_material)
+	_sync_panel_material()
+
+
+## 将面板实际尺寸同步给圆角矩形 Shader。
+func _sync_panel_material() -> void:
+	var mat := panel.material as ShaderMaterial
+	if mat != null:
+		mat.set_shader_parameter("rect_size", panel.size)
 
 
 ## 返回对话框当前是否正在接收推进输入。
@@ -70,7 +80,12 @@ func _show_line() -> void:
 	if _data == null:
 		return
 
+	var character = _data.get("speaker")
 	var speaker: String = str(_data.speaker_name).strip_edges()
+	if character != null:
+		speaker = str(character.get("display_name")).strip_edges()
+	_apply_character_style(character)
+
 	var narration: bool = bool(_data.narration) or speaker.is_empty()
 
 	speaker_label.text = speaker
@@ -86,6 +101,38 @@ func _show_line() -> void:
 	var duration := clampf(float(text_label.text.length()) * 0.035, 0.15, 1.5)
 	_reveal_tween = create_tween()
 	_reveal_tween.tween_property(text_label, "visible_ratio", 1.0, duration)
+
+
+## 完全使用角色资源中的字体、字号、颜色和描边设置。
+func _apply_character_style(character) -> void:
+	if character != null:
+		var font = character.get("name_font")
+		if font is Font:
+			speaker_label.add_theme_font_override("font", font)
+		else:
+			speaker_label.remove_theme_font_override("font")
+
+		var font_size = character.get("name_font_size")
+		if font_size != null:
+			speaker_label.add_theme_font_size_override("font_size", int(font_size))
+
+		var name_color = character.get("name_color")
+		if name_color is Color:
+			speaker_label.add_theme_color_override("font_color", name_color)
+
+		var outline_color = character.get("name_outline_color")
+		if outline_color is Color:
+			speaker_label.add_theme_color_override("font_outline_color", outline_color)
+
+		var outline_size = character.get("name_outline_size")
+		if outline_size != null:
+			speaker_label.add_theme_constant_override("outline_size", int(outline_size))
+	else:
+		speaker_label.remove_theme_font_override("font")
+		speaker_label.add_theme_font_size_override("font_size", 32)
+		speaker_label.add_theme_color_override("font_color", Color(0.63, 0.86, 1.0, 1.0))
+		speaker_label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 1.0))
+		speaker_label.add_theme_constant_override("outline_size", 8)
 
 
 ## 淡入或淡出面板，并在淡出结束后隐藏节点。
