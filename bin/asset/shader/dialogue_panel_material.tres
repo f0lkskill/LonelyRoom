@@ -1,11 +1,14 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://il617ojkl6a4"]
 
-[ext_resource type="Shader" path="res://bin/asset/shader/dialogue_panel.gdshader" id="1_shader"]
+[ext_resource type="Shader" uid="uid://c2inxofsyw6sk" path="res://bin/asset/shader/dialogue_panel.gdshader" id="1_shader"]
 
 [resource]
 shader = ExtResource("1_shader")
-shader_parameter/strength = 0.6
+shader_parameter/strength = 0.3
 shader_parameter/corner_radius = 48.0
-shader_parameter/edge_softness = 32.0
-shader_parameter/vertical_fade = 0.06
+shader_parameter/edge_softness = 24.0
+shader_parameter/vertical_fade = 0.04
 shader_parameter/rect_size = Vector2(800, 180)
+shader_parameter/blur_radius = 0.03
+shader_parameter/tint_amount = 0.25
+shader_parameter/tint_color = Color(0.08, 0.09, 0.12, 1)
